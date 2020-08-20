@@ -7,6 +7,7 @@ char passwd[30],sni[30];
 int mode;
 
 int main(){
+    system("clear");
     Menu:UI();
     if (mode == 1) {
         install_trojan();
@@ -47,7 +48,6 @@ int main(){
 }
 
 int UI() {
-    system("clear");
     printf("-----------------------------------------------------------\n");
     printf("----------------------trojan安装工具-----------------------\n");
     printf("-----------------------------------------------------------\n");
