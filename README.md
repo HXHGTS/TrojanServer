@@ -1,5 +1,6 @@
 # TrojanServer
-搭建Trojan服务器
+
+手动搭建Trojan服务器，并部署网页页面
 
 ### 一句话执行(CentOS7):
 ```
