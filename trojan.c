@@ -28,10 +28,12 @@ int main(){
         goto Menu;
     }
     else if (mode == 5) {
-        printf("手机trojan客户端请扫描二维码添加:\n");
+        printf("手机trojan客户端请扫描二维码添加:\n\n");
         system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-        printf("trojan链接（可用于生成Clash(R)的配置）:\n");
+        system("sleep 5");
+        printf("\ntrojan链接（可用于生成Clash(R)的配置）:\n\n");
         system("cat /usr/local/etc/trojan/client.conf");
+        printf("\n\n");
         goto Menu;
     }
     else if (mode == 6) {
@@ -105,10 +107,12 @@ int install_trojan() {
     fprintf(config, "trojan://%s@%s:443", passwd,sni);
     fclose(config);
     printf("trojan部署完成！\n");
-    printf("手机trojan客户端请扫描二维码添加:\n");
+    printf("手机trojan客户端请扫描二维码添加:\n\n");
     system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-    printf("trojan链接（可用于生成Clash(R)的配置）:\n");
+    system("sleep 5");
+    printf("\ntrojan链接（可用于生成Clash(R)的配置）:\n\n");
     system("cat /usr/local/etc/trojan/client.conf");
+    printf("\n\n");
     return 0;
 }
 
