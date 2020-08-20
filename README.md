@@ -8,7 +8,7 @@ sudo yum install -y gcc wget && wget https://github.com/HXHGTS/TrojanServer/raw/
 
 第一次点击安装后会自动升级系统内核并触发重启，重启后输入
 ```
-sudo ./WireGuard
+sudo ./trojan
 ```
 并选1继续安装
 
