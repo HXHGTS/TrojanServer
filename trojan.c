@@ -88,10 +88,6 @@ int install_trojan() {
     fprintf(config, "        \"%s\"\n", passwd);
     fclose(config);
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
-    printf("正在启动trojan并将trojan写入开机引导项. . .\n");
-    system("systemctl enable trojan && systemctl start trojan");
-    printf("正在验证trojan启动，不为空则启动成功. . .\n");
-    system("ss -lp | grep trojan");
     printf("正在配置防火墙. . .\n");
     system("systemctl enable firewalld && systemctl start firewalld");
     system("firewall-cmd --permanent --add-service=https");
@@ -106,6 +102,10 @@ int install_trojan() {
     config = fopen("/usr/local/etc/trojan/client.conf", "w");
     fprintf(config, "trojan://%s@%s:443", passwd,sni);
     fclose(config);
+    printf("正在启动trojan并将trojan写入开机引导项. . .\n");
+    system("systemctl enable trojan && systemctl start trojan");
+    printf("正在验证trojan启动，不为空则启动成功. . .\n");
+    system("ss -lp | grep trojan");
     printf("trojan部署完成！\n");
     printf("手机trojan客户端请扫描二维码添加:\n\n");
     system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
