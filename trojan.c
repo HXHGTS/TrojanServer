@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 FILE* config;
 char passwd[30],sni[30];
 int mode;
@@ -27,9 +28,9 @@ int main(){
         goto Menu;
     }
     else if (mode == 5) {
-        printf("ÊÖ»útrojan¿Í»§¶ËÇëÉ¨Ãè¶şÎ¬ÂëÌí¼Ó:\n");
+        printf("æ‰‹æœºtrojanå®¢æˆ·ç«¯è¯·æ‰«æäºŒç»´ç æ·»åŠ :\n");
         system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-        printf("trojanÁ´½Ó£¨¿ÉÓÃÓÚÉú³ÉClash(R)µÄÅäÖÃ£©:\n");
+        printf("trojané“¾æ¥ï¼ˆå¯ç”¨äºç”ŸæˆClash(R)çš„é…ç½®ï¼‰:\n");
         system("cat /usr/local/etc/trojan/client.conf");
         goto Menu;
     }
@@ -46,13 +47,13 @@ int main(){
 int UI() {
     system("clear");
     printf("-----------------------------------------------------------\n");
-    printf("----------------------trojan°²×°¹¤¾ß-----------------------\n");
+    printf("----------------------trojanå®‰è£…å·¥å…·-----------------------\n");
     printf("-----------------------------------------------------------\n");
-    printf("°²×°Ç°ÇëÏÈÈ¥°¢ÀïÔÆ»òÌÚÑ¶ÔÆÉêÇëÓòÃûÓëÓòÃû¶ÔÓ¦µÄSSLÖ¤Êé£¬·ñÔò»áµ¼ÖÂ°²×°Ê§°Ü£¡\n");
+    printf("å®‰è£…å‰è¯·å…ˆå»é˜¿é‡Œäº‘æˆ–è…¾è®¯äº‘ç”³è¯·åŸŸåä¸åŸŸåå¯¹åº”çš„SSLè¯ä¹¦ï¼Œå¦åˆ™ä¼šå¯¼è‡´å®‰è£…å¤±è´¥ï¼\n");
     printf("-----------------------------------------------------------\n");
-    printf("1.°²×°trojan\n2.ÔËĞĞtrojan\n3.²é¿´·şÎñÆ÷ÅäÖÃ\n4.ĞŞ¸Ä·şÎñÆ÷ÅäÖÃ\n5.ÏÔÊ¾¶şÎ¬ÂëÓëÅäÖÃÁ´½Ó\n6.¹Ø±Õtrojan\n0.ÍË³ö\n");
+    printf("1.å®‰è£…trojan\n2.è¿è¡Œtrojan\n3.æŸ¥çœ‹æœåŠ¡å™¨é…ç½®\n4.ä¿®æ”¹æœåŠ¡å™¨é…ç½®\n5.æ˜¾ç¤ºäºŒç»´ç ä¸é…ç½®é“¾æ¥\n6.å…³é—­trojan\n0.é€€å‡º\n");
     printf("-----------------------------------------------------------\n");
-    printf("ÇëÊäÈë:");
+    printf("è¯·è¾“å…¥:");
     scanf("%d", &mode);
     return 0;
 }
@@ -64,19 +65,19 @@ int install_trojan() {
     system("wget https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("chmod +x trojan-quickstart.sh");
     system("bash trojan-quickstart.sh");
-    printf("ÇëÊäÈëÒÑ°ó¶¨´Ë·şÎñÆ÷ipµÄÓòÃû:");
+    printf("è¯·è¾“å…¥å·²ç»‘å®šæ­¤æœåŠ¡å™¨ipçš„åŸŸå:");
     scanf("%s", sni);
-    printf("Çë½«pem»òcer»òcrt¸ñÊ½µÄÖ¤ÊéÓÃ¼ÇÊÂ±¾´ò¿ª²¢½«ÄÚÈİÕ³ÌùÖÁµ¯³öÒ³. . .\n");
-    printf("µ¯³öÒ³°´i¿ªÊ¼±à¼­£¬½áÊø±à¼­ÏÈ°´ESCÔÙ°´:wqÒÔ±£´æ\n");
+    printf("è¯·å°†pemæˆ–ceræˆ–crtæ ¼å¼çš„è¯ä¹¦ç”¨è®°äº‹æœ¬æ‰“å¼€å¹¶å°†å†…å®¹ç²˜è´´è‡³å¼¹å‡ºé¡µ. . .\n");
+    printf("å¼¹å‡ºé¡µæŒ‰iå¼€å§‹ç¼–è¾‘ï¼Œç»“æŸç¼–è¾‘å…ˆæŒ‰ESCå†æŒ‰:wqä»¥ä¿å­˜\n");
     system("sleep 5");
     system("vi /usr/local/etc/trojan/certificate.crt");
-    printf("Çë½«key¸ñÊ½µÄË½Ô¿ÓÃ¼ÇÊÂ±¾´ò¿ª²¢½«ÄÚÈİÕ³ÌùÖÁµ¯³öÒ³. . .\n");
-    printf("µ¯³öÒ³°´i¿ªÊ¼±à¼­£¬½áÊø±à¼­ÏÈ°´ESCÔÙ°´:wqÒÔ±£´æ\n");
+    printf("è¯·å°†keyæ ¼å¼çš„ç§é’¥ç”¨è®°äº‹æœ¬æ‰“å¼€å¹¶å°†å†…å®¹ç²˜è´´è‡³å¼¹å‡ºé¡µ. . .\n");
+    printf("å¼¹å‡ºé¡µæŒ‰iå¼€å§‹ç¼–è¾‘ï¼Œç»“æŸç¼–è¾‘å…ˆæŒ‰ESCå†æŒ‰:wqä»¥ä¿å­˜\n");
     system("sleep 5");
     system("vi /usr/local/etc/trojan/private.key");
-    printf("ÕıÔÚÉú³ÉÅäÖÃÎÄ¼ş. . .\n");
+    printf("æ­£åœ¨ç”Ÿæˆé…ç½®æ–‡ä»¶. . .\n");
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.1 > /usr/local/etc/trojan/config.json");
-    printf("ÕıÔÚÉú³ÉÇ¿ÃÜÂë. . .\n");
+    printf("æ­£åœ¨ç”Ÿæˆå¼ºå¯†ç . . .\n");
     system("pwgen -s 28 1 > /usr/local/etc/trojan/passwd.conf");
     config = fopen("/usr/local/etc/trojan/passwd.conf", "r");
     fscanf(config, "%s",passwd);
@@ -85,36 +86,36 @@ int install_trojan() {
     fprintf(config, "        \"%s\"\n", passwd);
     fclose(config);
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
-    printf("ÕıÔÚÆô¶¯trojan²¢½«trojanĞ´Èë¿ª»úÒıµ¼Ïî. . .\n");
+    printf("æ­£åœ¨å¯åŠ¨trojanå¹¶å°†trojanå†™å…¥å¼€æœºå¼•å¯¼é¡¹. . .\n");
     system("systemctl enable trojan && systemctl start trojan");
-    printf("ÕıÔÚÑéÖ¤trojanÆô¶¯£¬²»Îª¿ÕÔòÆô¶¯³É¹¦. . .\n");
+    printf("æ­£åœ¨éªŒè¯trojanå¯åŠ¨ï¼Œä¸ä¸ºç©ºåˆ™å¯åŠ¨æˆåŠŸ. . .\n");
     system("ss -lp | grep trojan");
-    printf("ÕıÔÚÆô¶¯nginx²¢½«nginxĞ´Èë¿ª»úÒıµ¼Ïî. . .\n");
+    printf("æ­£åœ¨å¯åŠ¨nginxå¹¶å°†nginxå†™å…¥å¼€æœºå¼•å¯¼é¡¹. . .\n");
     system("systemctl enable nginx && systemctl start nginx");
-    printf("ÕıÔÚÅäÖÃ·À»ğÇ½. . .\n");
+    printf("æ­£åœ¨é…ç½®é˜²ç«å¢™. . .\n");
     system("systemctl enable firewalld && systemctl start firewalld");
     system("firewall-cmd --permanent --add-service=https");
     system("firewall-cmd --permanent --add-service=http");
     system("firewall-cmd --reload");
-    printf("ÕıÔÚÅäÖÃhtmlÍøÒ³. . .\n");
+    printf("æ­£åœ¨é…ç½®htmlç½‘é¡µ. . .\n");
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/index.html > /usr/share/nginx/html/index.html");
     config = fopen("/usr/local/etc/trojan/client.conf", "w");
     fprintf(config, "trojan://%s@%s:443", passwd,sni);
     fclose(config);
-    printf("trojan²¿ÊğÍê³É£¡\n");
-    printf("ÊÖ»útrojan¿Í»§¶ËÇëÉ¨Ãè¶şÎ¬ÂëÌí¼Ó:\n");
+    printf("trojanéƒ¨ç½²å®Œæˆï¼\n");
+    printf("æ‰‹æœºtrojanå®¢æˆ·ç«¯è¯·æ‰«æäºŒç»´ç æ·»åŠ :\n");
     system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-    printf("trojanÁ´½Ó£¨¿ÉÓÃÓÚÉú³ÉClash(R)µÄÅäÖÃ£©:\n");
+    printf("trojané“¾æ¥ï¼ˆå¯ç”¨äºç”ŸæˆClash(R)çš„é…ç½®ï¼‰:\n");
     system("cat /usr/local/etc/trojan/client.conf");
     return 0;
 }
 
 int KernelUpdate() {
     if ((fopen("KernelUpdate.sh", "r")) == NULL) {
-        printf("ÕıÔÚÉı¼¶ĞÂÄÚºË. . .\n");
+        printf("æ­£åœ¨å‡çº§æ–°å†…æ ¸. . .\n");
         system("wget https://github.com/HXHGTS/TCPOptimization/raw/master/KernelUpdate.sh");
         system("chmod +x KernelUpdate.sh");
-        printf("ÕıÔÚÉı¼¶£¬½«×Ô¶¯´¥·¢ÖØÆôÒÔÓ¦ÓÃÅäÖÃ. . .\n");
+        printf("æ­£åœ¨å‡çº§ï¼Œå°†è‡ªåŠ¨è§¦å‘é‡å¯ä»¥åº”ç”¨é…ç½®. . .\n");
         system("bash KernelUpdate.sh");
     }
     else {
