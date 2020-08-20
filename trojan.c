@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 
 
@@ -61,7 +61,7 @@ int UI() {
 int install_trojan() {
     KernelUpdate();
     system("setenforce 0");
-    system("yum install -y curl pwgen qrencode epel-release nginx firewalld");
+    system("yum install -y curl pwgen qrencode unzip epel-release nginx firewalld");
     system("wget https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("chmod +x trojan-quickstart.sh");
     system("bash trojan-quickstart.sh");
@@ -90,15 +90,17 @@ int install_trojan() {
     system("systemctl enable trojan && systemctl start trojan");
     printf("正在验证trojan启动，不为空则启动成功. . .\n");
     system("ss -lp | grep trojan");
-    printf("正在启动nginx并将nginx写入开机引导项. . .\n");
-    system("systemctl enable nginx && systemctl start nginx");
     printf("正在配置防火墙. . .\n");
     system("systemctl enable firewalld && systemctl start firewalld");
     system("firewall-cmd --permanent --add-service=https");
     system("firewall-cmd --permanent --add-service=http");
     system("firewall-cmd --reload");
     printf("正在配置html网页. . .\n");
-    system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/index.html > /usr/share/nginx/html/index.html");
+    system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/html.zip > /usr/share/nginx/html/html.zip");
+    system("unzip -o /usr/share/nginx/html/html.zip -d /usr/share/nginx/html");
+    system("rm -f /usr/share/nginx/html/html.zip");
+    printf("正在启动nginx并将nginx写入开机引导项. . .\n");
+    system("systemctl enable nginx && systemctl start nginx");
     config = fopen("/usr/local/etc/trojan/client.conf", "w");
     fprintf(config, "trojan://%s@%s:443", passwd,sni);
     fclose(config);
