@@ -171,7 +171,9 @@ int DNS_Change() {
     system(command);
     sprintf(command, "echo \"nameserver %s\" >> /etc/resolv.conf", ns2);
     system(command);
-    system("sed -e '/DNS1=/d;/DNS2=/d;/DNS3=/d' /etc/sysconfig/network-scripts/ifcfg-eth0");
+    system("sed -e '/DNS1=/d;/DNS2=/d;/DNS3=/d' /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0.temp");
+    system("cp -rf /etc/sysconfig/network-scripts/ifcfg-eth0.temp /etc/sysconfig/network-scripts/ifcfg-eth0");
+    system("rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0.temp");
     sprintf(command, "echo \"DNS1=%s\" >> /etc/sysconfig/network-scripts/ifcfg-eth0", ns1);
     system(command);
     sprintf(command, "echo \"DNS2=%s\" >> /etc/sysconfig/network-scripts/ifcfg-eth0", ns2);
