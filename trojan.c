@@ -61,7 +61,7 @@ int UI() {
     printf("----------------------当前Kernel版本-----------------------\n");
     system("uname -sr");
     printf("-----------------------------------------------------------\n");
-    printf("1.安装trojan\n2.运行trojan\n3.显示二维码与配置链接\n4.查看服务器配置\n5.修改服务器配置\n6.修改DNS服务器\n7.关闭trojan\n0.退出\n");
+    printf("1.安装trojan\n2.运行trojan\n3.显示二维码与配置链接\n4.查看服务器配置\n5.修改服务器配置\n6.修改DNS服务器为Google\n7.关闭trojan\n0.退出\n");
     printf("-----------------------------------------------------------\n");
     printf("请输入:");
     scanf("%d", &mode);
@@ -143,41 +143,13 @@ int KernelUpdate() {
 }
 
 int DNS_Change() {
-    int dns;
-    char ns1[16], ns2[16],command[50];
-    printf("请选择想要设定的DNS:\n\n1.Google\n\n2.Cloudflare\n\n3.Opendns\n\n4.Quad9\n\n5.Level3\n\n请输入:");
-    scanf("%d", &dns);
-    if (dns == 1) {
-        sprintf(ns1, "8.8.8.8");
-        sprintf(ns2, "8.8.4.4");
-    }
-    else if (dns == 2) {
-        sprintf(ns1, "1.1.1.1");
-        sprintf(ns2, "1.0.0.1");
-    }
-    else if (dns == 3) {
-        sprintf(ns1, "208.67.222.222");
-        sprintf(ns2, "208.67.220.220");
-    }
-    else if (dns == 4) {
-        sprintf(ns1, "9.9.9.9");
-        sprintf(ns2, "149.112.112.9");
-    }
-    else {
-        sprintf(ns1, "4.2.2.1");
-        sprintf(ns2, "4.2.2.2");
-    }
-    sprintf(command, "echo \"nameserver %s\" > /etc/resolv.conf", ns1);
-    system(command);
-    sprintf(command, "echo \"nameserver %s\" >> /etc/resolv.conf", ns2);
-    system(command);
+    system("echo \"nameserver 8.8.8.8\" > /etc/resolv.conf");
+    system("echo \"nameserver 8.8.4.4\" >> /etc/resolv.conf");
     system("sed -e '/DNS1=/d;/DNS2=/d;/DNS3=/d' /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0.temp");
     system("cp -rf /etc/sysconfig/network-scripts/ifcfg-eth0.temp /etc/sysconfig/network-scripts/ifcfg-eth0");
     system("rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0.temp");
-    sprintf(command, "echo \"DNS1=%s\" >> /etc/sysconfig/network-scripts/ifcfg-eth0", ns1);
-    system(command);
-    sprintf(command, "echo \"DNS2=%s\" >> /etc/sysconfig/network-scripts/ifcfg-eth0", ns2);
-    system(command);
+    system("echo \"DNS1=8.8.8.8\" >> /etc/sysconfig/network-scripts/ifcfg-eth0");
+    system("echo \"DNS1=8.8.4.4\" >> /etc/sysconfig/network-scripts/ifcfg-eth0");
     system("service network restart");
     printf("DNS服务器修改成功!\n");
     return 0;
