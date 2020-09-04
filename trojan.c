@@ -39,10 +39,6 @@ Menu:UI();
         goto Menu;
     }
     else if (mode == 6) {
-        DNS_Change();
-        goto Menu;
-    }
-    else if (mode == 7) {
         system("systemctl stop trojan");
         goto Menu;
     }
@@ -61,7 +57,7 @@ int UI() {
     printf("----------------------当前Kernel版本-----------------------\n");
     system("uname -sr");
     printf("-----------------------------------------------------------\n");
-    printf("1.安装trojan\n2.运行trojan\n3.显示二维码与配置链接\n4.查看服务器配置\n5.修改服务器配置\n6.修改DNS服务器为Google\n7.关闭trojan\n0.退出\n");
+    printf("1.安装trojan\n2.运行trojan\n3.显示二维码与配置链接\n4.查看服务器配置\n5.修改服务器配置\n6.关闭trojan\n0.退出\n");
     printf("-----------------------------------------------------------\n");
     printf("请输入:");
     scanf("%d", &mode);
@@ -139,18 +135,5 @@ int KernelUpdate() {
         system("chmod +x TCPO.sh");
         system("bash TCPO.sh");
     }
-    return 0;
-}
-
-int DNS_Change() {
-    system("echo \"nameserver 8.8.8.8\" > /etc/resolv.conf");
-    system("echo \"nameserver 8.8.4.4\" >> /etc/resolv.conf");
-    system("sed -e '/DNS1=/d;/DNS2=/d;/DNS3=/d' /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0.temp");
-    system("cp -rf /etc/sysconfig/network-scripts/ifcfg-eth0.temp /etc/sysconfig/network-scripts/ifcfg-eth0");
-    system("rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0.temp");
-    system("echo \"DNS1=8.8.8.8\" >> /etc/sysconfig/network-scripts/ifcfg-eth0");
-    system("echo \"DNS1=8.8.4.4\" >> /etc/sysconfig/network-scripts/ifcfg-eth0");
-    system("service network restart");
-    printf("DNS服务器修改成功!\n");
     return 0;
 }
