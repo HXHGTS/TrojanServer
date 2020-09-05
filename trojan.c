@@ -66,13 +66,17 @@ int UI() {
 
 int install_trojan() {
     KernelUpdate();
+    printf("请输入已绑定此服务器ip的域名:");
+    scanf("%s", sni);
     system("setenforce 0");
     system("yum install -y curl pwgen qrencode unzip epel-release nginx");
     system("wget https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("chmod +x trojan-quickstart.sh");
     system("bash trojan-quickstart.sh");
-    printf("请输入已绑定此服务器ip的域名:");
-    scanf("%s", sni);
+    system("sleep 3");
+    system("rm -rf trojan-quickstart.sh");
+    system("rm -rf TCPO.sh");
+    system("rm -rf KernelUpdate.sh");
     system("echo \"------------------------------------------------------------------------------------\" >> /usr/local/etc/trojan/certificate.crt");
     system("echo \"请将pem或cer或crt格式的证书用记事本打开并将内容粘贴至此处. . .\" > /usr/local/etc/trojan/certificate.crt");
     system("echo \"英文输入法下按i开始编辑，结束编辑先按ESC再按:wq回车以保存\" >> /usr/local/etc/trojan/certificate.crt");
