@@ -17,6 +17,8 @@ Menu:UI();
     else if (mode == 2) {
         system("systemctl stop trojan");
         system("systemctl start trojan");
+        system("ss -lp | grep trojan");
+        system("sleep 3");
         goto Menu;
     }
     else if (mode == 3) {
@@ -34,7 +36,7 @@ Menu:UI();
     }
     else if (mode == 5) {
         system("systemctl stop trojan");
-        system("sudo vi /usr/local/etc/trojan/config.json");
+        system("vi /usr/local/etc/trojan/config.json");
         system("systemctl start trojan");
         goto Menu;
     }
@@ -81,12 +83,12 @@ int install_trojan() {
     system("echo \"请将pem或cer或crt格式的证书用记事本打开并将内容粘贴至此处. . .\" > /usr/local/etc/trojan/certificate.crt");
     system("echo \"英文输入法下按i开始编辑，结束编辑先按ESC再按:wq回车以保存\" >> /usr/local/etc/trojan/certificate.crt");
     system("echo \"-----------------以上为使用说明，编辑时请先删除所有文字再开始编辑！-------------------\" >> /usr/local/etc/trojan/certificate.crt");
-    system("sudo vi /usr/local/etc/trojan/certificate.crt");
+    system("vi /usr/local/etc/trojan/certificate.crt");
     system("echo \"------------------------------------------------------------------------------------\" >> /usr/local/etc/trojan/private.key");
     system("echo \"请将key格式的私钥用记事本打开并将内容粘贴至此处. . .\" > /usr/local/etc/trojan/private.key");
     system("echo \"英文输入法下按i开始编辑，结束编辑先按ESC再按:wq回车以保存\" >> /usr/local/etc/trojan/private.key");
     system("echo \"-----------------以上为使用说明，编辑时请先删除所有文字再开始编辑！-------------------\" >> /usr/local/etc/trojan/private.key");
-    system("sudo vi /usr/local/etc/trojan/private.key");
+    system("vi /usr/local/etc/trojan/private.key");
     printf("正在生成配置文件. . .\n");
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.1 > /usr/local/etc/trojan/config.json");
     printf("正在生成强密码. . .\n");
