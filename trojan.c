@@ -103,14 +103,9 @@ int install_trojan() {
     config = fopen("/usr/local/etc/trojan/client.conf", "w");
     fprintf(config, "trojan://%s@%s:443", passwd,sni);
     fclose(config);
-    printf("正在配置防火墙. . .\n");
-    system("yum install -y firewalld");
-    system("systemctl enable firewalld && systemctl start firewalld");
-    system("firewall-cmd --permanent --add-service=https");
-    system("firewall-cmd --permanent --add-service=http");
-    system("firewall-cmd --reload");
     printf("正在启动trojan并将trojan写入开机引导项. . .\n");
-    system("systemctl enable trojan && systemctl start trojan");
+    system("systemctl enable trojan");
+    system("systemctl start trojan");
     printf("正在验证trojan启动，不为空则启动成功. . .\n");
     system("ss -lp | grep trojan");
     printf("trojan部署完成！\n");
