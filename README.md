@@ -21,7 +21,7 @@ sudo ./trojan
 
 2.该域名必须提前申请SSL证书用于加密（后续考虑加入自动申请证书）
 
-3.脚本仅支持CentOS7系统
+3.脚本仅支持CentOS7系统，vps必须为KVM架构
 
 4.脚本执行需要root权限登录系统，AWS等特殊机型打开root权限方法[看这里](https://hxhgts.github.io/AWSECSRoot/)
 
