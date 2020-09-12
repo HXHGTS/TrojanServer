@@ -54,7 +54,7 @@ int UI() {
     printf("-----------------------------------------------------------\n");
     printf("----------------------trojan安装工具-----------------------\n");
     printf("-----------------------------------------------------------\n");
-    printf("安装前请先去阿里云或腾讯云申请域名与域名对应的SSL证书，否则会导致安装失败！\n");
+    printf("安装前或需要更新SSL证书，请将证书(.cer/.crt/.pem)与私钥(.key/.pem)分别命名为1.pem与2.pem，上传至服务器/root目录");
     printf("-----------------------------------------------------------\n");
     printf("----------------------当前Kernel版本-----------------------\n");
     system("uname -sr");
@@ -79,16 +79,10 @@ int install_trojan() {
     system("rm -rf trojan-quickstart.sh");
     system("rm -rf TCPO.sh");
     system("rm -rf KernelUpdate.sh");
-    system("echo \"------------------------------------------------------------------------------------\" >> /usr/local/etc/trojan/certificate.crt");
-    system("echo \"请将pem或cer或crt格式的证书用记事本打开并将内容粘贴至此处. . .\" > /usr/local/etc/trojan/certificate.crt");
-    system("echo \"英文输入法下按i开始编辑，结束编辑先按ESC再按:wq回车以保存\" >> /usr/local/etc/trojan/certificate.crt");
-    system("echo \"-----------------以上为使用说明，编辑时请先删除所有文字再开始编辑！-------------------\" >> /usr/local/etc/trojan/certificate.crt");
-    system("vi /usr/local/etc/trojan/certificate.crt");
-    system("echo \"------------------------------------------------------------------------------------\" >> /usr/local/etc/trojan/private.key");
-    system("echo \"请将key格式的私钥用记事本打开并将内容粘贴至此处. . .\" > /usr/local/etc/trojan/private.key");
-    system("echo \"英文输入法下按i开始编辑，结束编辑先按ESC再按:wq回车以保存\" >> /usr/local/etc/trojan/private.key");
-    system("echo \"-----------------以上为使用说明，编辑时请先删除所有文字再开始编辑！-------------------\" >> /usr/local/etc/trojan/private.key");
-    system("vi /usr/local/etc/trojan/private.key");
+    system("cp -rf /root/1.pem /usr/local/etc/trojan/certificate.crt");
+    system("cp -rf /root/2.pem /usr/local/etc/trojan/private.key");
+    system("rm -rf /root/1.pem");
+    system("rm -rf /root/2.pem");
     printf("正在生成配置文件. . .\n");
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.1 > /usr/local/etc/trojan/config.json");
     printf("正在生成强密码. . .\n");
@@ -101,7 +95,7 @@ int install_trojan() {
     fclose(config);
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
     printf("正在配置html网页. . .\n");
-    system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/html.zip > /usr/share/nginx/html/html.zip");
+    system("wget https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/html.zip -O /usr/share/nginx/html/html.zip");
     system("unzip -o /usr/share/nginx/html/html.zip -d /usr/share/nginx/html");
     system("rm -f /usr/share/nginx/html/html.zip");
     printf("正在启动nginx并将nginx写入开机引导项. . .\n");
