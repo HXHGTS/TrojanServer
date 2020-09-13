@@ -31,13 +31,33 @@ Menu:UI();
         goto Menu;
     }
     else if (mode == 4) {
-        system("cat /usr/local/etc/trojan/config.json");
-        goto Menu;
-    }
-    else if (mode == 5) {
         system("systemctl stop trojan");
         system("vi /usr/local/etc/trojan/config.json");
         system("systemctl start trojan");
+        goto Menu;
+    }
+    else if (mode == 5) {
+        if (fopen("/root/1.pem", "r") == NULL || fopen("/root/2.pem", "r") == NULL) {
+            printf("检测到证书与私钥文件未按照规定方式放置于根目录，强制退出！\n");
+            exit(0);
+        }
+        printf("请输入已绑定此服务器ip的新域名:");
+        scanf("%s", sni);
+        system("cp -rf /root/1.pem /usr/local/etc/trojan/certificate.crt");
+        system("cp -rf /root/2.pem /usr/local/etc/trojan/private.key");
+        system("systemctl restart nginx");
+        config = fopen("/usr/local/etc/trojan/passwd.conf", "r");
+        fscanf(config, "%s", passwd);
+        fclose(config);
+        config = fopen("/usr/local/etc/trojan/client.conf", "w");
+        fprintf(config, "trojan://%s@%s:443", passwd, sni);
+        fclose(config);
+        printf("手机trojan客户端请扫描二维码添加:\n\n");
+        system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
+        system("sleep 5");
+        printf("\ntrojan链接（可用于生成Clash(R)的配置）:\n\n");
+        system("cat /usr/local/etc/trojan/client.conf");
+        printf("\n\n");
         goto Menu;
     }
     else if (mode == 6) {
@@ -59,7 +79,7 @@ int UI() {
     printf("----------------------当前Kernel版本-----------------------\n");
     system("uname -sr");
     printf("-----------------------------------------------------------\n");
-    printf("1.安装trojan\n2.运行trojan\n3.显示二维码与配置链接\n4.查看服务器配置\n5.修改服务器配置\n6.关闭trojan\n0.退出\n");
+    printf("1.安装trojan\n2.运行trojan\n3.显示二维码与配置链接\n4.修改服务器配置\n5.更新域名与SSL证书\n6.关闭trojan\n0.退出\n");
     printf("-----------------------------------------------------------\n");
     printf("请输入:");
     scanf("%d", &mode);
@@ -68,21 +88,22 @@ int UI() {
 
 int install_trojan() {
     KernelUpdate();
+    if (fopen("/root/1.pem", "r") == NULL || fopen("/root/2.pem", "r") == NULL) {
+        printf("检测到证书与私钥文件未按照规定方式放置于根目录，强制退出！\n");
+        exit(0);
+    }
     printf("请输入已绑定此服务器ip的域名:");
     scanf("%s", sni);
     system("setenforce 0");
-    system("yum install -y curl pwgen qrencode unzip epel-release nginx");
+    system("yum install -y curl pwgen qrencode unzip bind-utils epel-release nginx");
     system("wget https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("chmod +x trojan-quickstart.sh");
     system("bash trojan-quickstart.sh");
     system("sleep 3");
     system("rm -rf trojan-quickstart.sh");
     system("rm -rf TCPO.sh");
-    system("rm -rf KernelUpdate.sh");
     system("cp -rf /root/1.pem /usr/local/etc/trojan/certificate.crt");
     system("cp -rf /root/2.pem /usr/local/etc/trojan/private.key");
-    system("rm -rf /root/1.pem");
-    system("rm -rf /root/2.pem");
     printf("正在生成配置文件. . .\n");
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.1 > /usr/local/etc/trojan/config.json");
     printf("正在生成强密码. . .\n");
