@@ -43,6 +43,9 @@ Menu:UI();
         }
         printf("请输入已绑定此服务器ip的新域名:");
         scanf("%s", sni);
+        config = fopen("/usr/local/etc/v2ray/sni.conf", "r");
+        fscanf(config, "%s", sni);
+        fclose(config);
         system("cp -rf /root/1.pem /usr/local/etc/trojan/certificate.crt");
         system("cp -rf /root/2.pem /usr/local/etc/trojan/private.key");
         system("systemctl restart nginx");
