@@ -91,10 +91,6 @@ int UI() {
 
 int install_trojan() {
     KernelUpdate();
-    if (fopen("/root/1.pem", "r") == NULL || fopen("/root/2.pem", "r") == NULL) {
-        printf("检测到证书与私钥文件未按照规定方式放置于根目录，强制退出！\n");
-        exit(0);
-    }
     config = fopen("/usr/local/etc/sni.conf", "r");
     fscanf(config, "%s", sni);
     fclose(config);
@@ -125,6 +121,11 @@ int install_trojan() {
     system("rm -f /usr/share/nginx/html/html.zip");
     printf("正在启动nginx并将nginx写入开机引导项. . .\n");
     system("systemctl enable nginx && systemctl start nginx");
+    system("mkdir /etc/systemd/system/nginx.service.d");
+    system("printf \"[Service]\nExecStartPost=/bin/sleep 0.1\n\" > /etc/systemd/system/nginx.service.d/override.conf");
+    system("systemctl daemon-reload");
+    system("systemctl restart nginx.service");
+    system("setsebool -P httpd_can_network_connect 1");
     config = fopen("/usr/local/etc/trojan/client.conf", "w");
     fprintf(config, "trojan://%s@%s:443", passwd,sni);
     fclose(config);
@@ -145,6 +146,10 @@ int install_trojan() {
 
 int KernelUpdate() {
     if ((fopen("KernelUpdate.sh", "r")) == NULL) {
+        if (fopen("/root/1.pem", "r") == NULL || fopen("/root/2.pem", "r") == NULL) {
+        printf("检测到证书与私钥文件未按照规定方式放置于根目录，强制退出！\n");
+        exit(0);
+    }
         printf("请输入已绑定此服务器ip的域名:");
         scanf("%s", sni);
         config = fopen("/usr/local/etc/sni.conf", "w");
