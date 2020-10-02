@@ -7,7 +7,6 @@ char passwd[30],sni[30];
 int mode;
 
 int main(){
-    system("clear");
 Menu:UI();
     system("clear");
     if (mode == 1) {
@@ -18,15 +17,16 @@ Menu:UI();
         system("systemctl stop trojan");
         system("systemctl start trojan");
         system("ss -lp | grep trojan");
-        system("sleep 3");
         goto Menu;
     }
     else if (mode == 3) {
         printf("手机trojan客户端请扫描二维码添加:\n\n");
         system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-        system("sleep 5");
-        printf("\ntrojan链接（可用于生成Clash(R)的配置）:\n\n");
+        system("sleep 1");
+        printf("\ntrojan链接:\n\n");
         system("cat /usr/local/etc/trojan/client.conf");
+        printf("\nClash配置:\n\n");
+        system("cat /usr/local/etc/trojan/clash.json");
         printf("\n\n");
         goto Menu;
     }
@@ -57,9 +57,11 @@ Menu:UI();
         fclose(config);
         printf("手机trojan客户端请扫描二维码添加:\n\n");
         system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-        system("sleep 5");
-        printf("\ntrojan链接（可用于生成Clash(R)的配置）:\n\n");
+        system("sleep 1");
+        printf("\ntrojan链接:\n\n");
         system("cat /usr/local/etc/trojan/client.conf");
+        printf("\nClash配置:\n\n");
+        system("cat /usr/local/etc/trojan/clash.json");
         printf("\n\n");
         goto Menu;
     }
@@ -135,11 +137,16 @@ int install_trojan() {
     printf("正在验证trojan启动，不为空则启动成功. . .\n");
     system("ss -lp | grep trojan");
     printf("trojan部署完成！\n");
+    config = fopen("/usr/local/etc/trojan/clash.json", "w");
+    fprintf(config, "  - {name: %s, server: %s, port: 443, type: trojan, password: %s}",sni,sni, passwd);
+    fclose(config);
     printf("手机trojan客户端请扫描二维码添加:\n\n");
     system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-    system("sleep 5");
-    printf("\ntrojan链接（可用于生成Clash(R)的配置）:\n\n");
+    system("sleep 1");
+    printf("\ntrojan链接:\n\n");
     system("cat /usr/local/etc/trojan/client.conf");
+    printf("\nClash配置:\n\n");
+    system("cat /usr/local/etc/trojan/clash.json");
     printf("\n\n");
     return 0;
 }
