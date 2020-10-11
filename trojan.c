@@ -22,7 +22,6 @@ Menu:UI();
     else if (mode == 3) {
         printf("手机trojan客户端请扫描二维码添加:\n\n");
         system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-        system("sleep 1");
         printf("\ntrojan链接:\n\n");
         system("cat /usr/local/etc/trojan/client.conf");
         printf("\nClash配置:\n\n");
@@ -57,7 +56,6 @@ Menu:UI();
         fclose(config);
         printf("手机trojan客户端请扫描二维码添加:\n\n");
         system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-        system("sleep 1");
         printf("\ntrojan链接:\n\n");
         system("cat /usr/local/etc/trojan/client.conf");
         printf("\nClash配置:\n\n");
@@ -138,11 +136,10 @@ int install_trojan() {
     system("ss -lp | grep trojan");
     printf("trojan部署完成！\n");
     config = fopen("/usr/local/etc/trojan/clash.json", "w");
-    fprintf(config, "  - {name: %s, server: %s, port: 443, type: trojan, password: %s}",sni,sni, passwd);
+    fprintf(config, "  - {name: %s, server: %s, port: 443, type: trojan, password: %s, udp: true}",sni,sni, passwd);
     fclose(config);
     printf("手机trojan客户端请扫描二维码添加:\n\n");
     system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
-    system("sleep 1");
     printf("\ntrojan链接:\n\n");
     system("cat /usr/local/etc/trojan/client.conf");
     printf("\nClash配置:\n\n");
