@@ -4,7 +4,7 @@
 
 手动搭建Trojan服务器，并部署网页页面
 
-### 一句话执行(CentOS7):
+### 一句话执行&&更新脚本(CentOS7):
 ```
 yum install -y gcc wget && wget https://github.com/HXHGTS/TrojanServer/raw/master/trojan.c -O trojan.c && chmod +x trojan.c && gcc -o trojan trojan.c && ./trojan
 ```
