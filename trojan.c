@@ -16,6 +16,7 @@ Menu:UI();
     else if (mode == 2) {
         system("systemctl stop trojan");
         system("systemctl start trojan");
+        printf("正在验证trojan启动，不为空则启动成功. . .\n");
         system("ss -lp | grep trojan");
         goto Menu;
     }
@@ -47,12 +48,33 @@ Menu:UI();
         fclose(config);
         system("cp -rf /root/1.pem /usr/local/etc/trojan/certificate.crt");
         system("cp -rf /root/2.pem /usr/local/etc/trojan/private.key");
-        system("systemctl restart nginx");
+        printf("正在生成配置文件. . .\n");
+        system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.1 > /usr/local/etc/trojan/config.json");
+        printf("正在生成强密码. . .\n");
+        system("pwgen -s 28 1 > /usr/local/etc/trojan/passwd.conf");
         config = fopen("/usr/local/etc/trojan/passwd.conf", "r");
         fscanf(config, "%s", passwd);
         fclose(config);
+        config = fopen("/usr/local/etc/trojan/config.json", "a");
+        fprintf(config, "        \"%s\"\n", passwd);
+        fclose(config);
+        system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
+        printf("正在配置html网页. . .\n");
+        system("wget https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/html.zip -O /usr/share/nginx/html/html.zip");
+        system("unzip -o /usr/share/nginx/html/html.zip -d /usr/share/nginx/html");
+        system("rm -f /usr/share/nginx/html/html.zip");
+        printf("正在重启nginx. . .\n");
+        system("systemctl restart nginx");
         config = fopen("/usr/local/etc/trojan/client.conf", "w");
         fprintf(config, "trojan://%s@%s:443", passwd, sni);
+        fclose(config);
+        printf("正在重启trojan. . .\n");
+        system("systemctl restart trojan");
+        printf("正在验证trojan启动，不为空则启动成功. . .\n");
+        system("ss -lp | grep trojan");
+        printf("trojan部署完成！\n");
+        config = fopen("/usr/local/etc/trojan/clash.json", "w");
+        fprintf(config, "  - {name: %s, server: %s, port: 443, type: trojan, password: %s, udp: true}", sni, sni, passwd);
         fclose(config);
         printf("手机trojan客户端请扫描二维码添加:\n\n");
         system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
@@ -65,6 +87,18 @@ Menu:UI();
     }
     else if (mode == 6) {
         system("systemctl stop trojan");
+        printf("正在更新trojan. . .\n");
+        system("wget https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
+        system("echo \"n\nn\n\" | bash trojan-quickstart.sh");
+        system("rm -f trojan-quickstart.sh");
+        system("systemctl start trojan");
+        printf("正在验证trojan启动，不为空则启动成功. . .\n");
+        system("ss -lp | grep trojan");
+        goto Menu;
+    }
+    else if (mode == 7) {
+        system("systemctl stop trojan");
+        system("systemctl disable trojan");
         goto Menu;
     }
     else {
@@ -82,7 +116,7 @@ int UI() {
     printf("----------------------当前Kernel版本-----------------------\n");
     system("uname -sr");
     printf("-----------------------------------------------------------\n");
-    printf("1.安装trojan\n2.运行trojan\n3.显示二维码与配置链接\n4.修改服务器配置\n5.更新域名与SSL证书\n6.关闭trojan\n0.退出\n");
+    printf("1.安装trojan\n2.运行trojan\n3.显示二维码与配置链接\n4.修改服务器配置\n5.更新域名与SSL证书\n6.更新trojan\n7.关闭trojan\n0.退出\n");
     printf("-----------------------------------------------------------\n");
     printf("请输入:");
     scanf("%d", &mode);
@@ -100,10 +134,10 @@ int install_trojan() {
     system("chmod +x trojan-quickstart.sh");
     system("bash trojan-quickstart.sh");
     system("sleep 3");
-    system("rm -rf trojan-quickstart.sh");
-    system("rm -rf TCPO.sh");
-    system("cp -rf /root/1.pem /usr/local/etc/trojan/certificate.crt");
-    system("cp -rf /root/2.pem /usr/local/etc/trojan/private.key");
+    system("rm -f trojan-quickstart.sh");
+    system("rm -f TCPO.sh");
+    system("cp -f /root/1.pem /usr/local/etc/trojan/certificate.crt");
+    system("cp -f /root/2.pem /usr/local/etc/trojan/private.key");
     printf("正在生成配置文件. . .\n");
     system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.1 > /usr/local/etc/trojan/config.json");
     printf("正在生成强密码. . .\n");
@@ -121,10 +155,6 @@ int install_trojan() {
     system("rm -f /usr/share/nginx/html/html.zip");
     printf("正在启动nginx并将nginx写入开机引导项. . .\n");
     system("systemctl enable nginx && systemctl start nginx");
-    system("mkdir /etc/systemd/system/nginx.service.d");
-    system("printf \"[Service]\nExecStartPost=/bin/sleep 0.1\n\" > /etc/systemd/system/nginx.service.d/override.conf");
-    system("systemctl daemon-reload");
-    system("systemctl restart nginx.service");
     system("setsebool -P httpd_can_network_connect 1");
     config = fopen("/usr/local/etc/trojan/client.conf", "w");
     fprintf(config, "trojan://%s@%s:443", passwd,sni);
