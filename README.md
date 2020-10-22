@@ -19,7 +19,7 @@ yum install -y gcc wget && wget https://github.com/HXHGTS/TrojanServer/raw/maste
 
 1.一个域名，与服务器ip做好dns解析
 
-2.该域名必须提前申请SSL证书用于加密（后续考虑加入自动申请证书），将证书(.cer/.crt/.pem)文件命名为1.pem，将私钥(.key/*.pem)文件命名为2.pem，放在/root目录下(SSL证书申请:[腾讯云](https://console.cloud.tencent.com/ssl) [阿里云](https://common-buy.aliyun.com/?spm=5176.b5912525.0.0.3c07GExwGExwfv&commodityCode=cas))
+2.该域名必须提前申请SSL证书用于加密（后续考虑加入自动申请证书），将证书(.cer/.crt/.pem)文件命名为1.pem，将私钥(.key/*.pem)文件命名为2.pem，放在/root目录下(SSL证书申请:[腾讯云](https://console.cloud.tencent.com/ssl) [阿里云](https://common-buy.aliyun.com/?spm=5176.b5912525.0.0.3c07GExwGExwfv&commodityCode=cas) [FreeSSL](https://freessl.org/))
 
 3.脚本仅支持CentOS7系统，vps必须为KVM或XEN架构
 
