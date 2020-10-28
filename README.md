@@ -5,14 +5,14 @@
 手动搭建Trojan服务器，并部署网页页面
 
 ### 一句话执行&&更新脚本(CentOS7):
-```
-yum install -y gcc wget && wget https://github.com/HXHGTS/TrojanServer/raw/master/trojan.c -O trojan.c && gcc -o trojan trojan.c && ./trojan
-```
+
+`yum install -y gcc wget && wget https://github.com/HXHGTS/TrojanServer/raw/master/trojan.c -O trojan.c && gcc -o trojan trojan.c && ./trojan`
+
 
 第一次点击安装后会自动升级系统内核并触发重启，重启后输入
-```
-./trojan
-```
+
+`./trojan`
+
 并选1继续安装
 
 ### 安装前准备：
