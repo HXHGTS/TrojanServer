@@ -93,7 +93,7 @@ int update_ssl() {
     system("ss -lp | grep trojan");
     printf("trojan部署完成！\n");
     config = fopen("/usr/local/etc/trojan/clash.json", "w");
-    fprintf(config, "  - {name: %s, server: %s, port: 443, type: trojan, password: %s, udp: true}", sni, sni, passwd);
+    fprintf(config, "  - {name: %s, server: %s, port: 443, type: trojan, password: %s, sni: %s, udp: true}", sni, sni, passwd, sni);
     fclose(config);
     printf("手机trojan客户端请扫描二维码添加:\n\n");
     system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
@@ -176,7 +176,7 @@ int install_trojan() {
     system("ss -lp | grep trojan");
     printf("trojan部署完成！\n");
     config = fopen("/usr/local/etc/trojan/clash.json", "w");
-    fprintf(config, "  - {name: %s, server: %s, port: 443, type: trojan, password: %s, udp: true}",sni,sni, passwd);
+    fprintf(config, "  - {name: %s, server: %s, port: 443, type: trojan, password: %s, sni: %s, udp: true}", sni, sni, passwd, sni);
     fclose(config);
     printf("手机trojan客户端请扫描二维码添加:\n\n");
     system("qrencode -t ansiutf8 < /usr/local/etc/trojan/client.conf");
