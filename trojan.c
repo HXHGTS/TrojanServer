@@ -108,7 +108,7 @@ int update_ssl() {
 int upgrade_trojan() {
     system("systemctl stop trojan");
     printf("正在更新trojan. . .\n");
-    system("wget https://cdn.jsdelivr.net/gh//trojan-gfw/trojan-quickstart/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
+    system("wget https://cdn.jsdelivr.net/gh/trojan-gfw/trojan-quickstart/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("echo \"n\nn\n\" | bash trojan-quickstart.sh");
     system("rm -f trojan-quickstart.sh");
     system("systemctl start trojan");
