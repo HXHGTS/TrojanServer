@@ -23,6 +23,6 @@
 
 3.脚本仅支持CentOS7系统，vps必须为KVM或XEN架构
 
-4.脚本执行需要root权限登录系统，AWS等特殊机型打开root权限方法[看这里](https://hxhgts.icu/AWSECSRoot/)
+4.脚本执行需要root权限登录系统，AWS等特殊机型打开root权限方法[看这里](https://hxhgts.ml/AWSECSRoot/)
 
 5.请在服务器后台防火墙放行tcp80(http)tcp443(https)端口
