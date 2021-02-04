@@ -68,7 +68,7 @@ int update_ssl() {
     system("cp -rf /root/1.pem /usr/local/etc/trojan/certificate.crt");
     system("cp -rf /root/2.pem /usr/local/etc/trojan/private.key");
     printf("正在生成配置文件. . .\n");
-    system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.1 > /usr/local/etc/trojan/config.json");
+    system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.1 > /usr/local/etc/trojan/config.json");
     printf("正在生成强密码. . .\n");
     system("pwgen -s 28 1 > /usr/local/etc/trojan/passwd.conf");
     config = fopen("/usr/local/etc/trojan/passwd.conf", "r");
@@ -77,9 +77,9 @@ int update_ssl() {
     config = fopen("/usr/local/etc/trojan/config.json", "a");
     fprintf(config, "        \"%s\"\n", passwd);
     fclose(config);
-    system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
+    system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
     printf("正在配置html网页. . .\n");
-    system("wget https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/html.zip -O /usr/share/nginx/html/html.zip");
+    system("wget https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/html.zip -O /usr/share/nginx/html/html.zip");
     system("unzip -o /usr/share/nginx/html/html.zip -d /usr/share/nginx/html");
     system("rm -f /usr/share/nginx/html/html.zip");
     printf("正在重启nginx. . .\n");
@@ -108,7 +108,7 @@ int update_ssl() {
 int upgrade_trojan() {
     system("systemctl stop trojan");
     printf("正在更新trojan. . .\n");
-    system("wget https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
+    system("wget https://cdn.jsdelivr.net/gh//trojan-gfw/trojan-quickstart/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("echo \"n\nn\n\" | bash trojan-quickstart.sh");
     system("rm -f trojan-quickstart.sh");
     system("systemctl start trojan");
@@ -140,7 +140,7 @@ int install_trojan() {
     fclose(config);
     system("setenforce 0");
     system("yum install -y curl pwgen qrencode unzip bind-utils epel-release nginx");
-    system("wget https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
+    system("wget https://cdn.jsdelivr.net/gh/trojan-gfw/trojan-quickstart/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("chmod +x trojan-quickstart.sh");
     system("bash trojan-quickstart.sh");
     system("sleep 3");
@@ -149,7 +149,7 @@ int install_trojan() {
     system("cp -f /root/1.pem /usr/local/etc/trojan/certificate.crt");
     system("cp -f /root/2.pem /usr/local/etc/trojan/private.key");
     printf("正在生成配置文件. . .\n");
-    system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.1 > /usr/local/etc/trojan/config.json");
+    system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.1 > /usr/local/etc/trojan/config.json");
     printf("正在生成强密码. . .\n");
     system("pwgen -s 28 1 > /usr/local/etc/trojan/passwd.conf");
     config = fopen("/usr/local/etc/trojan/passwd.conf", "r");
@@ -158,9 +158,9 @@ int install_trojan() {
     config = fopen("/usr/local/etc/trojan/config.json", "a");
     fprintf(config, "        \"%s\"\n", passwd);
     fclose(config);
-    system("curl https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
+    system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
     printf("正在配置html网页. . .\n");
-    system("wget https://raw.githubusercontent.com/HXHGTS/TrojanServer/master/html.zip -O /usr/share/nginx/html/html.zip");
+    system("wget https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/html.zip -O /usr/share/nginx/html/html.zip");
     system("unzip -o /usr/share/nginx/html/html.zip -d /usr/share/nginx/html");
     system("rm -f /usr/share/nginx/html/html.zip");
     printf("正在启动nginx并将nginx写入开机引导项. . .\n");
@@ -200,13 +200,13 @@ int KernelUpdate() {
         fprintf(config, "%s", sni);
         fclose(config);
         printf("正在升级新内核. . .\n");
-        system("wget https://github.com/HXHGTS/TCPOptimization/raw/master/KernelUpdate.sh");
+        system("wget https://cdn.jsdelivr.net/gh/HXHGTS/TCPOptimization/KernelUpdate.sh -O KernelUpdate.sh");
         system("chmod +x KernelUpdate.sh");
         printf("正在升级，将自动触发重启以应用配置. . .\n");
         system("bash KernelUpdate.sh");
     }
     else {
-        system("wget https://github.com/HXHGTS/TCPOptimization/raw/master/TCPO.sh");
+        system("wget https://cdn.jsdelivr.net/gh/HXHGTS/TCPOptimization/TCPO.sh -O TCPO.sh");
         system("chmod +x TCPO.sh");
         system("bash TCPO.sh");
     }
