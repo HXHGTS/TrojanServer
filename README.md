@@ -4,10 +4,13 @@
 
 手动搭建Trojan服务器，并部署网页页面
 
-### 一句话执行&&更新脚本(CentOS7):
+### 安装:
 
+KVM/XEN机器执行:
 `yum install -y gcc wget && wget https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.c -O trojan.c && gcc -o trojan trojan.c && ./trojan`
 
+OpenVZ机器执行:
+`yum install -y gcc wget && wget https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan_no_bbr.c -O trojan.c && gcc -o trojan trojan.c && ./trojan`
 
 第一次点击安装后会自动升级系统内核并触发重启，重启后输入
 
@@ -21,7 +24,7 @@
 
 2.该域名必须提前申请SSL证书用于加密（后续考虑加入自动申请证书），将证书(.cer/.crt/.pem)文件命名为1.pem，将私钥(.key/*.pem)文件命名为2.pem，放在/root目录下(SSL证书申请:[腾讯云](https://console.cloud.tencent.com/ssl) [阿里云](https://common-buy.aliyun.com/?spm=5176.b5912525.0.0.3c07GExwGExwfv&commodityCode=cas) [FreeSSL](https://freessl.cn/))
 
-3.脚本仅支持CentOS7系统，vps必须为KVM或XEN架构
+3.脚本仅支持CentOS7系统
 
 4.脚本执行需要root权限登录系统，AWS等特殊机型打开root权限方法[看这里](https://hxhgts.ml/AWSECSRoot/)
 
