@@ -78,10 +78,6 @@ int update_ssl() {
     fprintf(config, "        \"%s\"\n", passwd);
     fclose(config);
     system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
-    printf("正在配置html网页. . .\n");
-    system("wget https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/html.zip -O /usr/share/nginx/html/html.zip");
-    system("unzip -o /usr/share/nginx/html/html.zip -d /usr/share/nginx/html");
-    system("rm -f /usr/share/nginx/html/html.zip");
     printf("正在重启nginx. . .\n");
     system("systemctl restart nginx");
     config = fopen("/usr/local/etc/trojan/client.conf", "w");
@@ -158,11 +154,7 @@ int install_trojan() {
     config = fopen("/usr/local/etc/trojan/config.json", "a");
     fprintf(config, "        \"%s\"\n", passwd);
     fclose(config);
-    system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
-    printf("正在配置html网页. . .\n");
-    system("wget https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/html.zip -O /usr/share/nginx/html/html.zip");
-    system("unzip -o /usr/share/nginx/html/html.zip -d /usr/share/nginx/html");
-    system("rm -f /usr/share/nginx/html/html.zip");
+    system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.2 >> /usr/local/etc/trojan/config.json"); 
     printf("正在启动nginx并将nginx写入开机引导项. . .\n");
     system("systemctl enable nginx && systemctl start nginx");
     system("setsebool -P httpd_can_network_connect 1");
