@@ -78,7 +78,6 @@ int update_ssl() {
     fprintf(config, "        \"%s\"\n", passwd);
     fclose(config);
     system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
-    printf("正在配置html网页. . .\n");
     printf("正在重启nginx. . .\n");
     system("systemctl restart nginx");
     config = fopen("/usr/local/etc/trojan/client.conf", "w");
@@ -136,7 +135,7 @@ int install_trojan() {
     fscanf(config, "%s", sni);
     fclose(config);
     system("setenforce 0");
-    system("yum install -y curl pwgen qrencode unzip bind-utils epel-release nginx");
+    system("yum install -y curl pwgen qrencode bind-utils epel-release nginx");
     system("wget https://cdn.jsdelivr.net/gh/trojan-gfw/trojan-quickstart/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("chmod +x trojan-quickstart.sh");
     system("bash trojan-quickstart.sh");
@@ -156,7 +155,6 @@ int install_trojan() {
     fprintf(config, "        \"%s\"\n", passwd);
     fclose(config);
     system("curl https://cdn.jsdelivr.net/gh/HXHGTS/TrojanServer/trojan.conf.2 >> /usr/local/etc/trojan/config.json");
-    printf("正在配置html网页. . .\n");
     printf("正在启动nginx并将nginx写入开机引导项. . .\n");
     system("systemctl enable nginx && systemctl start nginx");
     system("setsebool -P httpd_can_network_connect 1");
