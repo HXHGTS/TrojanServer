@@ -135,7 +135,7 @@ int install_trojan() {
     fscanf(config, "%s", sni);
     fclose(config);
     system("setenforce 0");
-    system("yum install -y curl pwgen qrencode unzip bind-utils epel-release nginx");
+    system("yum install -y curl pwgen qrencode bind-utils epel-release nginx");
     system("wget https://cdn.jsdelivr.net/gh/trojan-gfw/trojan-quickstart/trojan-quickstart.sh -O /root/trojan-quickstart.sh");
     system("chmod +x trojan-quickstart.sh");
     system("bash trojan-quickstart.sh");
