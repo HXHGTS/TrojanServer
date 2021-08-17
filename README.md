@@ -18,6 +18,10 @@ OpenVZ机器执行:
 
 并选1继续安装
 
+### 卸载（官方）：
+
+`source <(curl -sL https://git.io/trojan-install) --remove`
+
 ### 安装前准备：
 
 1.一个域名，与服务器ip做好dns解析
